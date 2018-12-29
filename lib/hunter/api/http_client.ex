@@ -138,7 +138,7 @@ defmodule Hunter.Api.HTTPClient do
   def search(conn, query, options) do
     options = options |> Keyword.merge(q: query) |> Map.new()
 
-    "/api/v1/search"
+    "/api/v2/search"
     |> process_url(conn)
     |> request!(:result, :get, options, get_headers(conn))
   end
