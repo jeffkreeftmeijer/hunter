@@ -222,7 +222,8 @@ defmodule Hunter.Api do
     * `file` - media to be uploaded
 
   """
-  @callback upload_media(conn :: Hunter.Client.t(), file :: Path.t()) :: Hunter.Attachment.t()
+  @callback upload_media(conn :: Hunter.Client.t(), file :: Path.t(), options :: Keyword.t()) ::
+              Hunter.Attachment.t()
 
   ## Relationship
 

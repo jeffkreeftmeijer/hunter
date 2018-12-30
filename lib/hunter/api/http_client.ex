@@ -86,10 +86,10 @@ defmodule Hunter.Api.HTTPClient do
     |> request!(:application, :post, payload)
   end
 
-  def upload_media(conn, file) do
-    body =
-      {:multipart,
-       [{:file, file, {"form-data", [name: "file", filename: Path.basename(file)]}, []}]}
+  def upload_media(conn, file, options) do
+    options =
+      [{:file, file, {"form-data", [name: "file", filename: Path.basename(file)]}, []}] ++
+        Enum.map(options, fn {key, value} -> {to_string(key), value} end)
 
     headers =
       conn
@@ -98,7 +98,7 @@ defmodule Hunter.Api.HTTPClient do
 
     "/api/v1/media"
     |> process_url(conn)
-    |> request!(:attachment, :post, body, headers)
+    |> request!(:attachment, :post, {:multipart, options}, headers)
   end
 
   def relationships(conn, ids) do

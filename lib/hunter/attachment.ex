@@ -40,10 +40,16 @@ defmodule Hunter.Attachment do
 
     * `conn` - connection credentials
     * `file` - media to be uploaded
+    * `options` - option list
+
+  ## Options
+
+    * `description` - plain-text description of the media for accessibility (max 420 chars)
+    * `focus` - two floating points, comma-delimited.
 
   """
-  @spec upload_media(Hunter.Client.t(), Path.t()) :: Hunter.Attachment.t()
-  def upload_media(conn, file) do
-    @hunter_api.upload_media(conn, file)
+  @spec upload_media(Hunter.Client.t(), Path.t(), Keyword.t()) :: Hunter.Attachment.t()
+  def upload_media(conn, file, options \\ []) do
+    @hunter_api.upload_media(conn, file, options)
   end
 end
