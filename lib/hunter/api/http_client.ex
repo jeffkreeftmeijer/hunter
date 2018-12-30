@@ -86,11 +86,19 @@ defmodule Hunter.Api.HTTPClient do
     |> request!(:application, :post, payload)
   end
 
-  # TODO: Review this function
   def upload_media(conn, file) do
+    body =
+      {:multipart,
+       [{:file, file, {"form-data", [name: "file", filename: Path.basename(file)]}, []}]}
+
+    headers =
+      conn
+      |> get_headers
+      |> Keyword.merge("Content-Type": "multipart/form-data")
+
     "/api/v1/media"
     |> process_url(conn)
-    |> request!(:attachment, :post, {:file, file}, get_headers(conn))
+    |> request!(:attachment, :post, body, headers)
   end
 
   def relationships(conn, ids) do

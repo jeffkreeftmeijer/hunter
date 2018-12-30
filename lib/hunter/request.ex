@@ -33,6 +33,9 @@ defmodule Hunter.Request do
       [] ->
         "{}"
 
+      {:multipart, _} ->
+        data
+
       data when is_binary(data) ->
         data
 
